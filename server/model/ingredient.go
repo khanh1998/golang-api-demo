@@ -22,7 +22,7 @@ type Ingredients struct {
 	collection *mongo.Collection
 }
 
-func New(collectionName string, database *mongo.Database) *Ingredients {
+func NewIngredients(collectionName string, database *mongo.Database) *Ingredients {
 	ingredient := database.Collection(collectionName)
 	return &Ingredients{
 		collection: ingredient,

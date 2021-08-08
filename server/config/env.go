@@ -2,14 +2,17 @@ package config
 
 import (
 	"log"
+	"time"
 
 	"github.com/spf13/viper"
 )
 
 type Env struct {
-	MongoDBUri   string `mapstructure:"MongoDB_URI"`
-	Host         string `mapstructure:"HOST"`
-	DatabaseName string `mapstructure:"DATABASE_NAME"`
+	MongoDBUri    string        `mapstructure:"MongoDB_URI"`
+	Host          string        `mapstructure:"HOST"`
+	DatabaseName  string        `mapstructure:"DATABASE_NAME"`
+	SymmetricKey  string        `mapstructure:"SYMMETRIC_KEY"`
+	TokenDuration time.Duration `mapstructure:"TOKEN_DURATION"`
 }
 
 func LoadEnv(path string) (Env, error) {

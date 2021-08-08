@@ -11,17 +11,17 @@ import (
 )
 
 type IngredientController struct {
-	collection model.Ingredients
+	model model.Ingredients
 }
 
-func New(collection model.Ingredients) IngredientController {
+func New(model model.Ingredients) IngredientController {
 	return IngredientController{
-		collection: collection,
+		model: model,
 	}
 }
 
 func (i *IngredientController) GetAll(c *gin.Context) {
-	ingredients, err := i.collection.GetAll()
+	ingredients, err := i.model.GetAll()
 	if err != nil {
 		log.Panic(err)
 	}
@@ -30,7 +30,7 @@ func (i *IngredientController) GetAll(c *gin.Context) {
 
 func (i *IngredientController) GetById(c *gin.Context) {
 	id := c.Param("id")
-	ingredient, err := i.collection.GetById(id)
+	ingredient, err := i.model.GetById(id)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -42,11 +42,11 @@ func (i *IngredientController) AddOne(c *gin.Context) {
 	if err := c.BindJSON(&input); err != nil {
 		log.Panic(err)
 	}
-	id, err := i.collection.AddOne(input)
+	id, err := i.model.AddOne(input)
 	if err != nil {
 		log.Panic(err)
 	}
-	inserted, err := i.collection.GetById(id)
+	inserted, err := i.model.GetById(id)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -59,12 +59,12 @@ func (i *IngredientController) UpdateOne(c *gin.Context) {
 	if err := c.BindJSON(&input); err != nil {
 		log.Panic(err)
 	}
-	success, err := i.collection.UpdateOne(id, input)
+	success, err := i.model.UpdateOne(id, input)
 	if err != nil {
 		log.Panic(err)
 	}
 	if success {
-		ingredient, err := i.collection.GetById(id)
+		ingredient, err := i.model.GetById(id)
 		if err != nil {
 			log.Panic(err)
 		}
@@ -74,7 +74,7 @@ func (i *IngredientController) UpdateOne(c *gin.Context) {
 
 func (i *IngredientController) DeleteOne(c *gin.Context) {
 	id := c.Param("id")
-	success := i.collection.DeleteOne(id)
+	success := i.model.DeleteOne(id)
 	if success {
 		c.IndentedJSON(http.StatusOK, bson.M{"message": fmt.Sprintf("Delete %v successfully", id)})
 	} else {

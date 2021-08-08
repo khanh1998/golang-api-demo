@@ -21,7 +21,7 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-	app, err := server.NewServer(connection, env.DatabaseName)
+	app, err := server.NewServer(connection, &env)
 	if err != nil {
 		log.Panic(err)
 	}
